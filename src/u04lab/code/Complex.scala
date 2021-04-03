@@ -7,8 +7,9 @@ trait Complex {
   def *(c: Complex): Complex // should implement the product of two complex numbers
 }
 
+//companion object
 object Complex {
-  def apply(re:Double, im:Double):Complex = ??? // Fill here
+  def apply(re:Double, im:Double):Complex = new ComplexImpl2(re, im)  // Apply
 }
 
 class ComplexImpl(override val re: Double,
@@ -20,6 +21,13 @@ class ComplexImpl(override val re: Double,
   //Dati 2 numeri complessi (a;b) e (c;d), il loro prodotto è il numero complesso definito
   //Dalla coppia (ac-bd ; ad+bc)
   override def *(c: Complex): Complex = new ComplexImpl(this.re*c.re - this.im*c.im, this.re*c.im + this.im*c.re)
+}
+
+case class ComplexImpl2(re: Double, im: Double) extends Complex {
+  //non serve la new, equivale a new ComplexImpl2.apply(...)
+  override def +(c: Complex): Complex = ComplexImpl2(this.re + c.re, this.im + c.im)
+
+  override def *(c: Complex): Complex = ComplexImpl2(this.re*c.re - this.im*c.im, this.re*c.im + this.im*c.re)
 }
 
 object TryComplex extends App {
