@@ -11,6 +11,17 @@ object Complex {
   def apply(re:Double, im:Double):Complex = ??? // Fill here
 }
 
+class ComplexImpl(override val re: Double,
+                  override val im: Double) extends Complex {
+  //Dati 2 numeri complessi (a;b) e (c;d), a loro somma è il numero complesso
+  //definito dalla coppia (a+c ; b+d)
+  override def +(c: Complex): Complex = new ComplexImpl(this.re + c.re, this.im + c.im)
+
+  //Dati 2 numeri complessi (a;b) e (c;d), il loro prodotto è il numero complesso definito
+  //Dalla coppia (ac-bd ; ad+bc)
+  override def *(c: Complex): Complex = new ComplexImpl(this.re*c.re - this.im*c.im, this.re*c.im + this.im*c.re)
+}
+
 object TryComplex extends App {
   val a = Array(Complex(10,20), Complex(1,1), Complex(7,0))
   val c = a(0) + a(1) + a(2)
