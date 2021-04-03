@@ -58,6 +58,11 @@ object Streams extends App {
 
     def generate[A](next: => A): Stream[A] = cons(next, generate(next))
 
+    def streamFromList[A](list : List[A]) : Stream[A] = list match {
+      case List.Cons(head, tail) => cons(head, streamFromList(tail))
+      case List.Nil() => Empty()
+    }
+
   }
 
   import Stream._
