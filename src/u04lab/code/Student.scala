@@ -8,7 +8,7 @@ import u04lab.code.Lists.List.{Cons, Nil, append, contains, length, map} // impo
 trait Student {
   def name: String
   def year: Int
-  def enrolling(course: Course): Unit // the student participates to a Course
+  def enrolling(course: Course*): Unit // the student participates to a Course
   def courses: List[String] // names of course the student participates to
   def hasTeacher(teacher: String): Boolean // is the student participating to a course of this teacher?
 }
@@ -42,7 +42,7 @@ case class StudentImpl(name:String, year: Int) extends Student {
 
   override def courses: List[String] = map(_courses)(course => course.name)
 
-  override def enrolling(course: Course): Unit =   _courses = Cons(course, _courses)
+  override def enrolling(course: Course*): Unit =   course foreach ( course => _courses = Cons(course, _courses) )
 
   override def hasTeacher(teacher: String): Boolean = contains(map(_courses)(course => course.teacher))(teacher)  //anzichè passare la lista di corsi passo la lista di insegnanti
 
