@@ -3,7 +3,7 @@ package u04lab.code
 import java.time.Year
 
 import Lists._
-import u04lab.code.Lists.List.{Cons, Nil, append, length, map} // import custom List type (not the one in Scala stdlib)
+import u04lab.code.Lists.List.{Cons, Nil, append, contains, length, map} // import custom List type (not the one in Scala stdlib)
 
 trait Student {
   def name: String
@@ -32,7 +32,7 @@ case class CourseImpl(name:String, teacher:String) extends Course
 case class StudentImpl(name:String, year: Int) extends Student {
 //in case class parameters are public immutable
 
-  //test auxiliary constructor
+  //test auxiliary constructor, but apply method forces only one constructor
   def this() {
     this("anonimo", 2021)
     println (" auxiliary constructor used" )
@@ -40,14 +40,13 @@ case class StudentImpl(name:String, year: Int) extends Student {
 
   var _courses: List[Course] = Nil()
 
-  //ritorna lista corsi
   override def courses: List[String] = map(_courses)(course => course.name)
 
   override def enrolling(course: Course): Unit =   _courses = Cons(course, _courses)
 
-  override def hasTeacher(teacher: String): Boolean = ???
+  override def hasTeacher(teacher: String): Boolean = contains(map(_courses)(course => course.teacher))(teacher)  //anzichè passare la lista di corsi passo la lista di insegnanti
 
-  //test new function
+  //test new function, but unreachable!
   def isFollowing(): Boolean = length(courses)!=0
 }
 

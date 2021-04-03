@@ -1,5 +1,7 @@
 package u04lab.code
 
+import java.security.KeyStore.TrustedCertificateEntry
+
 import scala.annotation.tailrec
 
 object Lists extends App {
@@ -11,6 +13,12 @@ object Lists extends App {
   object List {
     case class Cons[E](head: E, tail: List[E]) extends List[E]
     case class Nil[E]() extends List[E]
+
+    def contains[A](list: List[A])(elem:A): Boolean = list match {
+      case Cons(head, tail) if head== elem => true
+      case Cons(head, tail) => contains(tail)(elem)
+      case Nil() => false
+    }
 
     def nil[A]: List[A] = Nil() // smart constructor
 

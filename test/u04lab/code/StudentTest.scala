@@ -1,6 +1,6 @@
 package u04lab.code
 
-import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
+import org.junit.jupiter.api.Assertions.{assertEquals, assertFalse, assertTrue}
 import org.junit.jupiter.api.Test
 import u04lab.code.Lists.List.Cons
 import u04lab.code.Lists.List.{Cons, Nil}
@@ -35,7 +35,7 @@ class StudentTest {
     assertEquals(Cons("PCD",Cons("PPS", Nil())) , s1.courses)
     assertEquals(Cons("PPS",Nil()) , s2.courses)
     assertEquals(Cons("SDR",Cons("PCD",Cons("PPS",Nil()))) , s3.courses)
-    //assertTrue(s1.hasTeacher("Ricci"))
+    assertTrue(s1.hasTeacher("Ricci"))
   }
 
 }
