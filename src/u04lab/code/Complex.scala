@@ -23,6 +23,7 @@ class ComplexImpl(override val re: Double,
   override def *(c: Complex): Complex = new ComplexImpl(this.re*c.re - this.im*c.im, this.re*c.im + this.im*c.re)
 }
 
+//case class implementation
 case class ComplexImpl2(re: Double, im: Double) extends Complex {
   //non serve la new, equivale a new ComplexImpl2.apply(...)
   override def +(c: Complex): Complex = ComplexImpl2(this.re + c.re, this.im + c.im)

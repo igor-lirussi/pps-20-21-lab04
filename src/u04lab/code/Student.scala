@@ -1,7 +1,9 @@
 package u04lab.code
 
+import java.time.Year
+
 import Lists._
-import u04lab.code.Lists.List.Cons // import custom List type (not the one in Scala stdlib)
+import u04lab.code.Lists.List.{Cons, length} // import custom List type (not the one in Scala stdlib)
 
 trait Student {
   def name: String
@@ -21,8 +23,33 @@ object Student {
 }
 
 object Course {
-  def apply(name: String, teacher: String): Course = ???
+  def apply(name: String, teacher: String): Course = CourseImpl(name, teacher)
 }
+
+
+case class CourseImpl(name:String, teacher:String) extends Course
+
+
+case class StudentImpl(name:String, year: Int) extends Student {
+//in case class parameters are public immutable
+
+  //test auxiliary constructor
+  def this() {
+    this("anonimo", 2021)
+  }
+
+  val _courses = List[String]
+
+  override def courses: List[String] = _courses
+
+  override def enrolling(course: Course): Unit = _courses
+
+  override def hasTeacher(teacher: String): Boolean = ???
+
+  //test new function
+  def isFollowing(): Boolean = length(courses)!=0
+}
+
 
 object Try extends App {
   val cPPS = Course("PPS","Viroli")

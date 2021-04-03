@@ -25,6 +25,13 @@ class ComplexTest {
     assertTrue(new ComplexImpl2(3,6) == new ComplexImpl2(3,6))
     assertFalse(new ComplexImpl2(6,3) == new ComplexImpl2(3,6))
 
+
+    //non serve la new
+    assertTrue( ComplexImpl2(3,6) ==  ComplexImpl2(3,6))
+
+    //usando il companion obj fornito come factory
+    assertTrue(Complex(3,6) == Complex(3,6))
+
     //toString implementata dal case class
     assertEquals("ComplexImpl2(3.0,6.0)",new ComplexImpl2(3,6).toString)
   }
