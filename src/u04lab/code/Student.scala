@@ -3,7 +3,7 @@ package u04lab.code
 import java.time.Year
 
 import Lists._
-import u04lab.code.Lists.List.{Cons, length} // import custom List type (not the one in Scala stdlib)
+import u04lab.code.Lists.List.{Cons, Nil, append, length, map} // import custom List type (not the one in Scala stdlib)
 
 trait Student {
   def name: String
@@ -19,13 +19,12 @@ trait Course {
 }
 
 object Student {
-  def apply(name: String, year: Int = 2017): Student = ???
+  def apply(name: String, year: Int = 2017): Student = StudentImpl(name, year)
 }
 
 object Course {
   def apply(name: String, teacher: String): Course = CourseImpl(name, teacher)
 }
-
 
 case class CourseImpl(name:String, teacher:String) extends Course
 
@@ -36,13 +35,16 @@ case class StudentImpl(name:String, year: Int) extends Student {
   //test auxiliary constructor
   def this() {
     this("anonimo", 2021)
+    println (" auxiliary constructor used" )
   }
 
-  val _courses = List[String]
+  var _courses: List[Course] = Nil()
 
-  override def courses: List[String] = _courses
+  //ritorna lista corsi
+  override def courses: List[String] = map(_courses)(course => course.name)
 
-  override def enrolling(course: Course): Unit = _courses
+  override def enrolling(course: Course): Unit =   _courses = Cons(course, _courses)
+
 
   override def hasTeacher(teacher: String): Boolean = ???
 
