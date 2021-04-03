@@ -2,6 +2,8 @@ package u04lab.code
 
 import java.security.KeyStore.TrustedCertificateEntry
 
+import u04lab.code.Lists.List.{Cons, Nil}
+
 import scala.annotation.tailrec
 
 object Lists extends App {
@@ -11,14 +13,29 @@ object Lists extends App {
 
   // a companion object (i.e., module) for List
   object List {
+
     case class Cons[E](head: E, tail: List[E]) extends List[E]
+
     case class Nil[E]() extends List[E]
 
-    def contains[A](list: List[A])(elem:A): Boolean = list match {
-      case Cons(head, tail) if head== elem => true
+    def contains[A](list: List[A])(elem: A): Boolean = list match {
+      case Cons(head, tail) if head == elem => true
       case Cons(head, tail) => contains(tail)(elem)
       case Nil() => false
     }
+
+    def apply[A](elems: A*): List[A] = {
+      var list : List[A] = Nil()
+      elems foreach( A => list = Cons(A, list)  )
+      return list
+    }
+    //def apply[A](elems: A): Student = new ListImpl(elems)
+
+    //    case class LitImpl[A](elems: A) {
+    //      var list: List[A] = Nil()
+    //      elems foreach (A => list = Cons(A, list))
+    //      return list
+    //    }
 
     def nil[A]: List[A] = Nil() // smart constructor
 
@@ -33,44 +50,44 @@ object Lists extends App {
     }
 
     def drop[A](l: List[A], n: Int): List[A] = l match {
-      case _ if n<=0 || l==Nil() => l
-      case Cons(h,t) => drop(t,n-1)
+      case _ if n <= 0 || l == Nil() => l
+      case Cons(h, t) => drop(t, n - 1)
     }
 
-    def map[A,B](l: List[A])(f: A => B): List[B] = l match {
-      case Cons(h,t) => Cons(f(h), map(t)(f))
+    def map[A, B](l: List[A])(f: A => B): List[B] = l match {
+      case Cons(h, t) => Cons(f(h), map(t)(f))
       case Nil() => Nil()
     }
 
     def filter[A](l: List[A])(f: A => Boolean): List[A] = l match {
-      case Cons(h,t) if f(h) => Cons(h, filter(t)(f))
-      case Cons(h,t) => filter(t)(f)
+      case Cons(h, t) if f(h) => Cons(h, filter(t)(f))
+      case Cons(h, t) => filter(t)(f)
       case Nil() => Nil()
     }
 
-    def flatMap[A,B](l: List[A])(f: A => List[B]): List[B] = l match {
-      case Cons(h,t) => append(f(h),flatMap(t)(f))
+    def flatMap[A, B](l: List[A])(f: A => List[B]): List[B] = l match {
+      case Cons(h, t) => append(f(h), flatMap(t)(f))
       case Nil() => Nil()
     }
 
     @tailrec
-    def foldLeft[A,B](l: List[A])(acc: B)(f: (B,A)=>B): B = l match {
-      case Cons(h,t) => foldLeft(t)(f(acc,h))(f)
+    def foldLeft[A, B](l: List[A])(acc: B)(f: (B, A) => B): B = l match {
+      case Cons(h, t) => foldLeft(t)(f(acc, h))(f)
       case Nil() => acc
     }
 
-    def foldRightNonTailRec[A,B](l: List[A])(acc: B)(f: (A,B)=>B): B = l match {
-      case Cons(h,t) => f(h, foldRightNonTailRec(t)(acc)(f))
+    def foldRightNonTailRec[A, B](l: List[A])(acc: B)(f: (A, B) => B): B = l match {
+      case Cons(h, t) => f(h, foldRightNonTailRec(t)(acc)(f))
       case Nil() => acc
     }
 
-    def reverse[A](l: List[A]) : List[A] =
-      foldLeft(l)(nil[A])((acc,elem) => Cons(elem,acc))
+    def reverse[A](l: List[A]): List[A] =
+      foldLeft(l)(nil[A])((acc, elem) => Cons(elem, acc))
 
-    def foldRightViaFoldleft[A,B](l: List[A])(acc: B)(f: (A,B)=>B): B =
-      foldLeft(reverse(l))(acc)((acc,elem) => f(elem,acc))
+    def foldRightViaFoldleft[A, B](l: List[A])(acc: B)(f: (A, B) => B): B =
+      foldLeft(reverse(l))(acc)((acc, elem) => f(elem, acc))
 
-    def foldRight[A,B](l: List[A])(acc: B)(f: (A,B)=>B): B =
+    def foldRight[A, B](l: List[A])(acc: B)(f: (A, B) => B): B =
       foldRightViaFoldleft(l)(acc)(f)
 
     def filterByFlatmap[A](l: List[A])(f: A => Boolean): List[A] = ???
