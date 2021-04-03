@@ -45,7 +45,6 @@ case class StudentImpl(name:String, year: Int) extends Student {
 
   override def enrolling(course: Course): Unit =   _courses = Cons(course, _courses)
 
-
   override def hasTeacher(teacher: String): Boolean = ???
 
   //test new function
