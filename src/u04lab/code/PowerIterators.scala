@@ -4,7 +4,7 @@ import u04lab.code.Lists.List
 import u04lab.code.Lists.List.{Nil, append, _}
 import u04lab.code.Optionals.Option
 import u04lab.code.Streams.Stream
-import u04lab.code.Streams.Stream.{Empty, streamFromList, take}
+import u04lab.code.Streams.Stream.{streamFromList, take}
 
 import scala.util.Random
 
